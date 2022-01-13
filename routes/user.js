@@ -5,7 +5,12 @@ const { check } = require('express-validator');
 const { usuariosGet, usuariosPost, usuariosPut, usuariosDelete } = require('../controllers/usuarios');
 
 const { esRolValido, emailExiste, existeUsuarioPorID } = require('../helpers/db-validators');
-const { validarCampos } = require('../middlewares/validar-campos');
+
+const { 
+    validarCampos,
+    validarJWT,
+    esAdminRol
+ } = require('../middlewares')
 
 
 const router = Router();
@@ -30,9 +35,13 @@ router.post('/' , [
 ] , usuariosPost);
 
 router.delete('/:id',[
+    validarJWT,
+    esAdminRol,
     check('id','No es un ID valido!').isMongoId(),
     check('id').custom(existeUsuarioPorID),
     validarCampos
+
+
 ],usuariosDelete);
 
 module.exports = router;
