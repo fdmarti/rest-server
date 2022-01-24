@@ -9,7 +9,7 @@ const dbConnection = async () => {
             useUnifiedTopology: true,
         });
 
-        console.log('Base online');
+        console.log('Base up');
 
     } catch (error) {
             console.log(error);
